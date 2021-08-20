@@ -15,6 +15,7 @@ class CreateProfessionalsTable extends Migration
     {
         Schema::create('professionals', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
             $table->integer('code')->default(0)->comment('Habria que preguntar si es necesario');
             $table->string('matricula_prov')->nullable();
             $table->string('matricula_nac')->nullable();

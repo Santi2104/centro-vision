@@ -18,6 +18,23 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'dni',
+        'dni_type',
+        'lastname',
+        'date',
+        'gender',
+        'address',
+        'addr_num',
+        'addr_piso',
+        'addr_dpto',
+        'location',
+        'cod_pos',
+        'tel_par',
+        'tel_lab',
+        'cel',
+        'nacionalidad',
+        'provincia',
+        'cuit',
         'email',
         'password',
     ];
@@ -40,4 +57,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the patient that owns the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
+
+    /**
+     * Get the professional that owns the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function professional()
+    {
+        return $this->belongsTo(Professional::class);
+    }
 }
