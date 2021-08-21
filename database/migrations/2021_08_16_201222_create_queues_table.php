@@ -15,9 +15,12 @@ class CreateQueuesTable extends Migration
     {
         Schema::create('queues', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id')->nullable()->comment('Fk a la tabla pacientes');
-            $table->string('profesional_id')->nullable()->comment('Fk a la tabla de profesionales');
+            //$table->string('user_id')->nullable()->comment('Fk a la tabla pacientes');
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('professional_id')->constrained();
+            //$table->string('profesional_id')->nullable()->comment('Fk a la tabla de profesionales');
             $table->boolean('llamando')->default(0)->comment('Valor para saber si se lo esta llamando para asistir al consultorio');
+            $table->boolean('atendido')->default(0)->comment('Para saber si el registro actual cumplio con el turno');
             $table->timestamps();
         });
     }

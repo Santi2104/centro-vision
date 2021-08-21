@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOfficesTable extends Migration
+class CreatePracticesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateOfficesTable extends Migration
      */
     public function up()
     {
-        Schema::create('offices', function (Blueprint $table) {
+        Schema::create('practices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('professional_id')->constrained();
-            $table->string('name')->comment('Nombre del lugar, por ej: Consultorio');
-            //$table->string('equipamiento')->nullable()->comment('Clave foranea de todo el equipamiento de la oficina');
+            $table->string('cod')->unique();
+            $table->text('description');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateOfficesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('offices');
+        Schema::dropIfExists('practices');
     }
 }

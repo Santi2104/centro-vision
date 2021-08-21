@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEquipmentTable extends Migration
+class AddGroupToPractice extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateEquipmentTable extends Migration
      */
     public function up()
     {
-        Schema::create('equipment', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('office_id')->constrained();
-            $table->string('machine')->nullable();
-            $table->timestamps();
+        Schema::table('practices', function (Blueprint $table) {
+            $table->foreignId('practice_group_id')->constrained();
         });
     }
 
@@ -28,6 +25,8 @@ class CreateEquipmentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('equipment');
+        Schema::table('practices', function (Blueprint $table) {
+            //
+        });
     }
 }
