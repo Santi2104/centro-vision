@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AdmissionController;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\QueueController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,7 +25,7 @@ Route::group([
     'prefix' => 'admision',
     'middleware' => 'auth:sanctum',
 ], function(){
-    Route::get('search-user', [AdmissionController::class,'searchUserByDni']);
+    //Route::get('search-user', [AdmissionController::class,'getUserByDni']);
 });
 
 Route::post('register', [AuthController::class, 'register']);
@@ -36,3 +37,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 //Para que funcione el logout esta ruta tiene que estar bajo un middleware auth o sanctum
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+
+//Rutas de prueba de cola de pacientes
+//Route::post('cola-pacientes', [QueueController::class, 'addPatientToQueue']);
+Route::get('search-user', [AdmissionController::class,'getUserByDni']);
+Route::post('cola-pacientes', [AdmissionController::class,'addUserToQueue']);
+Route::get('cola-pacientes', [QueueController::class, 'getNextPatientToQueue']);
+Route::get('profesionales-practicas', [AdmissionController::class, 'getAdmisionData']);

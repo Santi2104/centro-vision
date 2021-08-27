@@ -8,4 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Practice extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'cod',
+        'description'
+    ];
+
+    /**
+     * Get the practiceGroup that owns the Practice
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function practiceGroup()
+    {
+        return $this->belongsTo(PracticeGroup::class);
+    }
 }

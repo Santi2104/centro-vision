@@ -61,13 +61,13 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the patient that owns the User
+     * Get the patient associated with the User
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function patient()
     {
-        return $this->belongsTo(Patient::class);
+        return $this->hasOne(Patient::class);
     }
 
     /**

@@ -27,4 +27,14 @@ class Professional extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Get all of the queues for the Professional
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function queues()
+    {
+        return $this->hasMany(Queue::class);
+    }
 }
