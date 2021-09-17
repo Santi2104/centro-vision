@@ -37,7 +37,7 @@ class AdmissionController extends Controller
           ->get();
 
         if(!$user->count()){
-            return response()->json([
+            return response()->json([//Mandar las practicas
                 'message' => 'El usuario no existe'
             ]);
         }
@@ -62,7 +62,6 @@ class AdmissionController extends Controller
             'cola.*.alta' => 'required',
             'admision.*.professional_id' => 'required',
             'admision.*.patient_id' => 'required',
-            //'admision.*.date' => 'required',
             'admision.*.importe' => 'required',
         ]);
 

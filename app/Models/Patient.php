@@ -26,4 +26,14 @@ class Patient extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Get all of the agendas for the Patient
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function agendas()
+    {
+        return $this->hasMany(Agenda::class);
+    }
 }

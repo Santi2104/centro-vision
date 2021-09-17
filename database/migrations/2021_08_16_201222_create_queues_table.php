@@ -19,7 +19,7 @@ class CreateQueuesTable extends Migration
             $table->foreignId('patient_id')->constrained();
             $table->foreignId('professional_id')->constrained();
             //$table->string('profesional_id')->nullable()->comment('Fk a la tabla de profesionales');
-            $table->time('alta')->comment('Hora de alta de la consulta');
+            $table->time('alta')->comment('Hora de alta de la consulta');//Cambiar el tipo de dato
             $table->boolean('llamando')->default(0)->comment('Valor para saber si se lo esta llamando para asistir al consultorio');
             $table->boolean('atendido')->default(0)->comment('Para saber si el registro actual cumplio con el turno');
             $table->timestamps();

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AdmissionController;
+use App\Http\Controllers\Api\V1\AgendaController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\QueueController;
 use Illuminate\Http\Request;
@@ -44,3 +45,6 @@ Route::get('search-user', [AdmissionController::class,'getUserByDni']);
 Route::post('cola-pacientes', [AdmissionController::class,'addUserToQueue']);
 Route::get('cola-pacientes', [QueueController::class, 'getNextPatientToQueue']);
 Route::get('profesionales-practicas', [AdmissionController::class, 'getAdmisionData']);
+//Agregar ruta para consultar turnos aca
+// Route::post('agenda', [AdmissionController::class, 'addAgenda']);
+Route::post('agenda', [AgendaController::class, 'addAgendaToProfessional']);
