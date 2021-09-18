@@ -19,5 +19,15 @@ class Turno extends Model
         'cumplido'
     ];
 
+    /**
+     * Get the agenda that owns the Turno
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function agenda()
+    {
+        return $this->belongsTo(Agenda::class);
+    }
+
     
 }

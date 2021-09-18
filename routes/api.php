@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\AdmissionController;
 use App\Http\Controllers\Api\V1\AgendaController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\QueueController;
+use App\Http\Controllers\Api\V1\TurnosController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -48,3 +49,4 @@ Route::get('profesionales-practicas', [AdmissionController::class, 'getAdmisionD
 //Agregar ruta para consultar turnos aca
 // Route::post('agenda', [AdmissionController::class, 'addAgenda']);
 Route::post('agenda', [AgendaController::class, 'addAgendaToProfessional']);
+Route::post('turno', [TurnosController::class, 'agregarPacienteAlTurno']);
