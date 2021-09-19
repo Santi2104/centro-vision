@@ -50,3 +50,4 @@ Route::get('profesionales-practicas', [AdmissionController::class, 'getAdmisionD
 // Route::post('agenda', [AdmissionController::class, 'addAgenda']);
 Route::post('agenda', [AgendaController::class, 'addAgendaToProfessional']);
 Route::post('turno', [TurnosController::class, 'agregarPacienteAlTurno']);
+Route::get('turno/paciente', [TurnosController::class, 'buscarTurnoPaciente']);

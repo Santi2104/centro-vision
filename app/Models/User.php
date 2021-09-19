@@ -90,6 +90,16 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    /**
+     * Get all of the turnoPaciente for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function turnoPaciente()
+    {
+        return $this->hasManyThrough(Turno::class, Patient::class);
+    }
+
     public function is_admision(){
         return $this->role->name == "admision";
     }

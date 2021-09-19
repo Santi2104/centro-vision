@@ -28,12 +28,12 @@ class Patient extends Model
     }
 
     /**
-     * Get all of the agendas for the Patient
+     * Get all of the turnos for the Patient
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function agendas()
+    public function turnos()
     {
-        return $this->hasMany(Agenda::class);
+        return $this->hasMany(Turno::class);
     }
 }
