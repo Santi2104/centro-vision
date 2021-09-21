@@ -21,12 +21,12 @@ class Agenda extends Model
     public $timestamps = false;
 
     /**
-     * Get the patient that owns the Agenda
+     * Get the profesional that owns the Agenda
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function patient()
+    public function profesional()
     {
-        return $this->belongsTo(Patient::class);
+        return $this->belongsTo(Professional::class,'professional_id');
     }
 }

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Paciente\PacienteTurnoResource;
 use App\Models\Agenda;
 use App\Models\Turno;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class TurnosController extends Controller
@@ -34,10 +36,25 @@ class TurnosController extends Controller
 
     public function buscarTurnoPaciente(Request $request){
 
-        $turnos = User::where('dni',$request['dni'])->first();//Crear un Resourse para esta parte
-        return response()->json([
-            "turnos" => $turnos->turnoPaciente
+        $validador = Validator::make($request->all(),[
+            'dni' => ['required']
         ]);
+
+        if($validador->fails()){
+            return response()->json([
+                'errores' => $validador->errors()
+            ]);
+        }
+
+        $turnos = User::where('dni',$request['dni'])->first();
+
+        if($turnos == null){
+            return response()->json([
+                'mensaje' => 'Paciente no encontrado'
+            ]);
+        }
+
+        return new PacienteTurnoResource($turnos);
 
     }
 }

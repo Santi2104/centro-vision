@@ -37,4 +37,14 @@ class Professional extends Model
     {
         return $this->hasMany(Queue::class);
     }
+
+    /**
+     * Get all of the agendas for the Professional
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function agendas()
+    {
+        return $this->hasMany(Agenda::class);
+    }
 }

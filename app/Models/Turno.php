@@ -29,5 +29,15 @@ class Turno extends Model
         return $this->belongsTo(Agenda::class);
     }
 
+    /**
+     * Get the practica that owns the Turno
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function practica()
+    {
+        return $this->belongsTo(Practice::class,'practice_id');
+    }
+
     
 }
