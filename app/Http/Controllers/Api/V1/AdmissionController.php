@@ -112,7 +112,7 @@ class AdmissionController extends Controller
     }
 
     public function getAdmisionData(){
-        //El nombre talves cambie a getAdmisionData
+        //Crear resources para la respuesta de esto
         $profesionales = Professional::with([
             'user' => function($query){
                 $query->select('id','name','lastname');

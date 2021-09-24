@@ -17,8 +17,8 @@ class AuthController extends Controller
             'email' => ['required','string', Rule::unique(User::class)],
             'lastname' => ['required', 'string'],
             'dni' => ['required', Rule::unique(User::class)],//Sacar esta regla y colocarla en otro lado
+            'dni_type' => ['required'],
             'password'=> ['required','string','confirmed'],
-            'role_id' => Rule::requiredIf($request->user()->is_admision)
         ]);
 
         $user = User::create([
@@ -26,9 +26,12 @@ class AuthController extends Controller
             'lastname' => $campos['lastname'],
             'email' => $campos['email'],
             'dni' => $campos['dni'],
+            'dni_type' => $campos['dni_type'],
             'password'=> bcrypt($campos['password']),
-            'role_id' => $campos['role_id'],
+            'role_id' => 2,
         ]);
+
+        $user->patient()->create();
 
        return response()->json([
             'user' => $user,
