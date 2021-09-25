@@ -16,7 +16,8 @@ class Turno extends Model
         'observaciones',
         'practice_id',
         'cancelado',
-        'cumplido'
+        'cumplido',
+        'o_s_id'
     ];
 
     /**
@@ -37,6 +38,16 @@ class Turno extends Model
     public function practica()
     {
         return $this->belongsTo(Practice::class,'practice_id');
+    }
+
+    /**
+     * Get the obraSocial that owns the Turno
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function obraSocial()
+    {
+        return $this->belongsTo(OS::class,'os_id');
     }
 
     

@@ -20,6 +20,7 @@ class CreateTurnosTable extends Migration
             $table->string('orden')->unique();
             $table->text('observaciones')->nullable();
             $table->foreignId('practice_id')->constrained();
+            $table->foreignId('o_s_id')->constrained();
             $table->boolean('cancelado')->default(0);
             $table->boolean('cumplido')->default(0);
             $table->timestamps();

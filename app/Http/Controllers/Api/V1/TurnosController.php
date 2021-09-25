@@ -15,11 +15,26 @@ class TurnosController extends Controller
 {
     public function agregarPacienteAlTurno(Request $request){
 
+        $validador = Validator::make($request->all(),[
+            'agenda_id' => ['required'],
+            'patient_id' => ['required'],
+            'o_s_id' => ['required'],
+            'practice_id' => ['required'],
+        ]);
+
+        if($validador->fails()){
+            
+            return response()->json([
+                'errores' => $validador->errors()
+            ]);
+        }
+
         $turno = Turno::create([
             'agenda_id' => $request['agenda_id'],
             'patient_id' => $request['patient_id'],
             'orden' => Str::uuid(),
             'observaciones' => $request['observaciones'],
+            'o_s_id' => $request['os_id'],
             'practice_id' => $request['practice_id'],
         ]);
 
