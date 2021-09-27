@@ -12,11 +12,12 @@ class Queue extends Model
     protected $fillable = [
         'patient_id',
         'professional_id',
+        'alta',
         'llamando',
         'atendido'
     ];
 
-    public $timestamps = false;
+    //public $timestamps = false;
 
 
 }

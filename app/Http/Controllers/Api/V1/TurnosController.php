@@ -34,7 +34,7 @@ class TurnosController extends Controller
             'patient_id' => $request['patient_id'],
             'orden' => Str::uuid(),
             'observaciones' => $request['observaciones'],
-            'o_s_id' => $request['os_id'],
+            'o_s_id' => $request['o_s_id'],
             'practice_id' => $request['practice_id'],
         ]);
 

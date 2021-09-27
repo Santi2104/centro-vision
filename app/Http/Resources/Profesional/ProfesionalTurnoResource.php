@@ -15,7 +15,8 @@ class ProfesionalTurnoResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
+            'id' => $this->profesional->id,
+            'user_id' => $this->id,
             'nombre' => $this->name,
             'apellido' => $this->lastname
         ];

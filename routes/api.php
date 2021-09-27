@@ -28,6 +28,7 @@ Route::group([
     'middleware' => 'auth:sanctum',
 ], function(){
     //Route::get('search-user', [AdmissionController::class,'getUserByDni']);
+    Route::post('ingreso-paciente', [AdmissionController::class,'ingresoPaciente']);
 });
 
 Route::post('register', [AuthController::class, 'register']);

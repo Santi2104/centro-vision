@@ -12,7 +12,7 @@ class Admission extends Model
     protected $fillable = [
         'date',
         'user_id',
-        'o_s',
+        'o_s_id',
         'professional_id',
         'patient_id',
         'practice_id',
@@ -60,5 +60,15 @@ class Admission extends Model
     public function practice()
     {
         return $this->belongsTo(Practice::class);
+    }
+
+    /**
+     * Get the agenda that owns the Admission
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function agenda()
+    {
+        return $this->belongsTo(Agenda::class);
     }
 }

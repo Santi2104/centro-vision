@@ -17,7 +17,8 @@ class PacienteTurnoResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
+            'user_id' => $this->id,
+            'paciente_id' => $this->patient->id,
             'nombre' => $this->name,
             'apellido' => $this->lastname,
             'dni' => $this->dni,

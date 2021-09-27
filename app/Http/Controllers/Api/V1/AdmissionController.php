@@ -12,6 +12,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -133,6 +134,48 @@ class AdmissionController extends Controller
                 "practicas" => $practicas,
                 "obra_social" => $os
             ]
+        ]);
+
+    }
+
+    public function ingresoPaciente(Request $request){
+
+        $validator = Validator::make($request->all(),[
+            'o_s' => ['required'],
+            'professional_id' => ['required'],
+            'patient_id' => ['required'],
+            'practice_id' => ['required'],
+            'importe' => ['required'],
+            'alta' => ['required'],
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                "mensaje" => $validator->errors()
+            ]);
+        }
+
+
+        Admission::create([
+            'date' => Carbon::now('America/Argentina/La_Rioja')->toDateTimeLocalString(),
+            'user_id' => Auth::id(),
+            'o_s_id' => $request['o_s'],
+            'professional_id' => $request['professional_id'],
+            'patient_id' => $request['patient_id'],
+            'practice_id' => $request['practice_id'],
+            'importe' => $request['importe'],
+            'notes' => $request['notas'],
+            'nro_comprobante' => $request['nro_comprobante']
+        ]);
+
+        Queue::create([
+            'professional_id' => $request['professional_id'],
+            'patient_id' => $request['patient_id'],
+            'alta' => $request['alta'],
+        ]);
+
+        return response()->json([
+            'mensaje' => "Admision de paciente cargada de manera satisfactoria",
         ]);
 
     }

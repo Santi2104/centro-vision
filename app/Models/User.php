@@ -71,13 +71,13 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the professional that owns the User
+     * Get the profesional associated with the User
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function professional()
+    public function profesional()
     {
-        return $this->belongsTo(Professional::class);
+        return $this->hasOne(Professional::class);
     }
 
     /**

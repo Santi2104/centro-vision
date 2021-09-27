@@ -17,7 +17,7 @@ class CreateAdmissionsTable extends Migration
             $table->id();
             $table->timestamp('date')->comment('Fecha de ingreso?');
             $table->foreignId('user_id')->constrained();  
-            $table->foreignId('o_s')->constrained();
+            $table->foreignId('o_s_id')->constrained();
             $table->foreignId('professional_id')->constrained();
             $table->foreignId('patient_id')->constrained();
             $table->foreignId('practice_id')->constrained();
