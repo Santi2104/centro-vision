@@ -47,4 +47,14 @@ class Professional extends Model
     {
         return $this->hasMany(Agenda::class);
     }
+
+    /**
+     * The practicas that belong to the Professional
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function practicas()
+    {
+        return $this->belongsToMany(Practice::class,'practica_profesionales');
+    }
 }

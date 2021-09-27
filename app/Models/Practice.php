@@ -23,4 +23,14 @@ class Practice extends Model
     {
         return $this->belongsTo(PracticeGroup::class);
     }
+
+    /**
+     * The profesionales that belong to the Practice
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function profesionales()
+    {
+        return $this->belongsToMany(Professional::class, 'practica_profesionales');
+    }
 }
