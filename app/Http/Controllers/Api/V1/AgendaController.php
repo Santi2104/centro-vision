@@ -31,6 +31,7 @@ class AgendaController extends Controller
         foreach($intervalos as $intervalo){
             $agenda = new Agenda();
             $agenda->professional_id = $request['professional_id'];
+            $agenda->practice_id = $request['practice_id'];
             $agenda->fecha = $dia;
             $agenda->hora = $intervalo;
             $agenda->intervalo = $request['intervalo'];

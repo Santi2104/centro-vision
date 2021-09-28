@@ -14,7 +14,7 @@ class Turno extends Model
         'patient_id',
         'orden',
         'observaciones',
-        'practice_id',
+        //'practice_id',
         'cancelado',
         'cumplido',
         'o_s_id'

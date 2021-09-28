@@ -15,7 +15,8 @@ class CreateAgendasTable extends Migration
     {
         Schema::create('agendas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('professional_id')->constrained();//Aca falta agregar la practica que se va a realizar
+            $table->foreignId('professional_id')->constrained();
+            $table->foreignId('practice_id')->constrained();
             $table->date('fecha');
             $table->time('hora');
             $table->integer('intervalo');

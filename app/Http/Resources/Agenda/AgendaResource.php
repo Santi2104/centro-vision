@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Agenda;
 
+use App\Http\Resources\Practica\PracticaTurnoResource;
 use App\Http\Resources\Profesional\ProfesionalTurnoResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,7 +20,9 @@ class AgendaResource extends JsonResource
             'id' => $this->id,
             'fecha' => $this->fecha,
             'hora' => $this->hora,
-            'profesional' => new ProfesionalTurnoResource($this->profesional->user)
+            'profesional' => new ProfesionalTurnoResource($this->profesional->user),
+            'practica' => new PracticaTurnoResource($this->practica)
+            //Agregar aca el dato de la obra social
         ];
     }
 }

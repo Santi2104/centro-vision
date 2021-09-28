@@ -20,7 +20,6 @@ class TurnoPacienteResource extends JsonResource
             'orden' => $this->orden,
             'agenda' => new AgendaResource($this->agenda),
             'observaciones' => $this->observaciones,
-            'practica' => $this->practica->description
         ];
     }
 }

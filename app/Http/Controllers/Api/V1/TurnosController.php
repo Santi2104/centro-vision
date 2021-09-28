@@ -19,7 +19,7 @@ class TurnosController extends Controller
             'agenda_id' => ['required'],
             'patient_id' => ['required'],
             'o_s_id' => ['required'],
-            'practice_id' => ['required'],
+            //'practice_id' => ['required'],
         ]);
 
         if($validador->fails()){
@@ -35,7 +35,7 @@ class TurnosController extends Controller
             'orden' => Str::uuid(),
             'observaciones' => $request['observaciones'],
             'o_s_id' => $request['o_s_id'],
-            'practice_id' => $request['practice_id'],
+           // 'practice_id' => $request['practice_id'],
         ]);
 
         $agenda = Agenda::find($request['agenda_id'], ['id','tomado']);

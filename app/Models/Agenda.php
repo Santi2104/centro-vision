@@ -12,6 +12,7 @@ class Agenda extends Model
     protected $fillable = [
         'professional_id',
         'fecha',
+        'practice_id',
         'hora_desde',
         'hora_hasta',
         'intervalo',
@@ -28,5 +29,15 @@ class Agenda extends Model
     public function profesional()
     {
         return $this->belongsTo(Professional::class,'professional_id');
+    }
+
+        /**
+     * Get the practica that owns the Turno
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function practica()
+    {
+        return $this->belongsTo(Practice::class,'practice_id');
     }
 }
