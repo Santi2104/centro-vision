@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Profesional\ProfesionalPracticaResource;
 use App\Models\Admission;
 use App\Models\OS;
 use App\Models\Practice;
@@ -113,25 +114,14 @@ class AdmissionController extends Controller
     }
 
     public function getAdmisionData(){
-        //Crear resources para la respuesta de esto
-        $profesionales = Professional::with([
-            'user' => function($query){
-                $query->select('id','name','lastname');
-            }
-        ])->get(['id','user_id']);
 
-        $practicas = Practice::with([
-            'practiceGroup' => function($query){
-                $query->select('id','cod');
-            }
-        ])->get(['id', 'cod', 'description','practice_group_id']);
+        $profesionales = Professional::all(['id','user_id']);
 
         $os = OS::all(['id','nombre_comercial','codigo_os']); 
 
         return response()->json([
             "data" => [
-                "profesionales" => $profesionales,
-                "practicas" => $practicas,
+                "profesionales" => ProfesionalPracticaResource::collection($profesionales),
                 "obra_social" => $os
             ]
         ]);
