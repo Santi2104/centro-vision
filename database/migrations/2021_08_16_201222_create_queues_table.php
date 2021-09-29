@@ -13,7 +13,7 @@ class CreateQueuesTable extends Migration
      */
     public function up()
     {
-        Schema::create('queues', function (Blueprint $table) {
+        Schema::create('colas', function (Blueprint $table) {
             $table->id();
             //$table->string('user_id')->nullable()->comment('Fk a la tabla pacientes');
             $table->foreignId('patient_id')->constrained();
@@ -33,6 +33,6 @@ class CreateQueuesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('queues');
+        Schema::dropIfExists('colas');
     }
 }

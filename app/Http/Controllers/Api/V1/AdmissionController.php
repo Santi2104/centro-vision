@@ -8,7 +8,7 @@ use App\Models\Admission;
 use App\Models\OS;
 use App\Models\Practice;
 use App\Models\Professional;
-use App\Models\Queue;
+use App\Models\Cola;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
@@ -76,7 +76,7 @@ class AdmissionController extends Controller
         try{//Creo que cada insercion debe ir en su propio try catch
             foreach($colas as $item){
 
-                $cola = new Queue();
+                $cola = new Cola();
                 $cola->professional_id = $item['professional_id'];
                 $cola->patient_id = $item['patient_id'];
                 $cola->alta = Carbon::createFromTimeString($item['alta'])->toTimeString();
@@ -85,7 +85,7 @@ class AdmissionController extends Controller
                 $allDataCola[] = $cola->attributesToArray();
             }
     
-            Queue::insert($allDataCola);
+            Cola::insert($allDataCola);
     
             foreach($admisiones as $item){
     
@@ -158,7 +158,7 @@ class AdmissionController extends Controller
             'nro_comprobante' => $request['nro_comprobante']
         ]);
 
-        Queue::create([
+        Cola::create([
             'professional_id' => $request['professional_id'],
             'patient_id' => $request['patient_id'],
             'alta' => $request['alta'],
