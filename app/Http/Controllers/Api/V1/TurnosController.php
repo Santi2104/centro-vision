@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Paciente\PacienteTurnoResource;
+use App\Http\Resources\Turno\TurnoPacienteResource;
 use App\Models\Agenda;
 use App\Models\Turno;
 use App\Models\User;
@@ -44,7 +45,7 @@ class TurnosController extends Controller
 
         return response()->json([
             'message' => "El turno fue creado de manera correcta",
-            'turno' => $turno,
+            'turno' => new TurnoPacienteResource($turno),
         ]);
 
     }
