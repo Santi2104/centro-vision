@@ -54,20 +54,6 @@ class DatabaseSeeder extends Seeder
         ->count(1)
         ->create(['role_id' => 4]);
 
-        \App\Models\User::factory()
-        ->count(50)
-        ->create(['role_id' => 2])
-        ->each(function (\App\Models\User $user){
-           Patient::factory()->create(['user_id' => $user->id]);
-        });
-
-        \App\Models\User::factory()
-        ->count(20)
-        ->create(['role_id' => 3])
-        ->each(function (\App\Models\User $user){
-           Professional::factory()->create(['user_id' => $user->id]);
-        });
-
         OS::factory()->times(1)->create([
             'codigo_os' => 'APOS',
             'razon_social' => 'APOS',
@@ -85,6 +71,21 @@ class DatabaseSeeder extends Seeder
             'razon_social' => 'OSDE',
             'nombre_comercial' => 'OSDE',
         ]);
+
+        \App\Models\User::factory()
+        ->count(50)
+        ->create(['role_id' => 2])
+        ->each(function (\App\Models\User $user){
+           Patient::factory()->create(['user_id' => $user->id,'o_s_id' => 1]);
+        });
+
+        \App\Models\User::factory()
+        ->count(20)
+        ->create(['role_id' => 3])
+        ->each(function (\App\Models\User $user){
+           Professional::factory()->create(['user_id' => $user->id]);
+        });
+
 
         PracticeGroup::factory()->times(1)->create([
             'cod' => 'C',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Paciente\PacienteAdmisionResource;
 use App\Http\Resources\Profesional\ProfesionalPracticaResource;
 use App\Models\Admission;
 use App\Models\OS;
@@ -31,12 +32,7 @@ class AdmissionController extends Controller
             ]);
         }
 
-        $user = User::with([
-            'patient' => function($query){
-                $query->select('id','ob','plan','user_id');
-            }
-        ])->where('dni', $request['dni'])
-          ->get();
+        $user = User::where('dni', $request['dni'])->first();
 
         if(!$user->count()){
             return response()->json([//Mandar las practicas
@@ -45,7 +41,7 @@ class AdmissionController extends Controller
         }
 
         return response()->json([
-            'user' => $user
+            'user' => new PacienteAdmisionResource($user)
         ]);
 
     }

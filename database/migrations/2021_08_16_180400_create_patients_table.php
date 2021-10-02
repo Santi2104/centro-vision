@@ -16,7 +16,7 @@ class CreatePatientsTable extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->string('ob')->nullable()->comment('Obra social. Deberia ser clave foranea');
+            $table->foreignId('o_s_id')->constrained('o_s');
             $table->string('plan')->nullable();
             $table->string('notes')->nullable()->comment('Observaciones');
             $table->boolean('operado')->default(false);
