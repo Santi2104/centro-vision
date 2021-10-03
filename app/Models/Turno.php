@@ -47,7 +47,7 @@ class Turno extends Model
      */
     public function obraSocial()
     {
-        return $this->belongsTo(OS::class,'os_id');
+        return $this->belongsTo(OS::class,'o_s_id');
     }
 
     

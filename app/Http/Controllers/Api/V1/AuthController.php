@@ -19,6 +19,8 @@ class AuthController extends Controller
             'dni' => ['required', Rule::unique(User::class)],//Sacar esta regla y colocarla en otro lado
             'dni_type' => ['required'],
             'password'=> ['required','string','confirmed'],
+            'celular' => ['required'],
+            'o_s_id' => ['required']
         ]);
 
         $user = User::create([
@@ -27,11 +29,12 @@ class AuthController extends Controller
             'email' => $campos['email'],
             'dni' => $campos['dni'],
             'dni_type' => $campos['dni_type'],
+            'cel' => $campos['celular'],
             'password'=> bcrypt($campos['password']),
             'role_id' => 2,
         ]);
 
-        $user->patient()->create();
+        $user->patient()->create(['o_s_id' => $campos['o_s_id']]);
 
        return response()->json([
             'user' => $user,
