@@ -59,8 +59,26 @@ class AuthController extends Controller
             ],401);
 
         }
+        
+        $userRole = $user->role->name;
 
-        $token = $user->createToken('miToken')->plainTextToken;
+        if($userRole === "admin"){
+
+            $rol = "admin";
+            
+        }elseif($userRole === "admision"){
+
+            $rol = "admision";
+
+        }elseif($userRole === "profesional"){
+
+            $rol = "profesional";
+
+        }else{
+
+            $rol = "paciente";
+        }
+        $token = $user->createToken('auth_token',[$rol])->plainTextToken;
 
        return response()->json([
             'user' => $user,
