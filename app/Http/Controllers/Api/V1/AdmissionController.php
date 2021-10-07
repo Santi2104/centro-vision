@@ -34,7 +34,7 @@ class AdmissionController extends Controller
 
         $user = User::where('dni', $request['dni'])->first();
 
-        if(!$user->count()){
+        if(is_null($user)){
             return response()->json([//Mandar las practicas
                 'message' => 'El usuario no existe'
             ]);
