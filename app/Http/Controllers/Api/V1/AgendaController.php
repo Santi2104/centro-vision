@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Library\apiHelper;
 use App\Models\Agenda;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -10,6 +11,9 @@ use Illuminate\Http\Request;
 
 class AgendaController extends Controller
 {
+
+    use apiHelper;
+
     public function addAgendaToProfessional(Request $request){
 
         $allAdmisionData = [];
@@ -42,9 +46,7 @@ class AgendaController extends Controller
         //Cuarto: Insertamos los valores que creamos antes en la tabla agenda
         Agenda::insert($allAdmisionData);
 
-        return response()->json([
-            'mensaje' => 'Agenda creada de manera correcta'
-        ]);
+        return $this->onMessage(201,'Agenda creada de manera satisfactoria');
         
 
     }

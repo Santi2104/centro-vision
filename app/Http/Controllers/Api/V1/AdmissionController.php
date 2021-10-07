@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Library\apiHelper;
 use App\Http\Resources\Paciente\PacienteAdmisionResource;
 use App\Http\Resources\Profesional\ProfesionalPracticaResource;
 use App\Models\Admission;
@@ -20,6 +21,9 @@ use Illuminate\Support\Facades\Validator;
 
 class AdmissionController extends Controller
 {
+
+    use apiHelper;
+
     public function getUserByDni(Request $request){
 
         $validator = Validator::make($request->all(),[
@@ -35,14 +39,11 @@ class AdmissionController extends Controller
         $user = User::where('dni', $request['dni'])->first();
 
         if(is_null($user)){
-            return response()->json([//Mandar las practicas
-                'message' => 'El usuario no existe'
-            ]);
+
+            return $this->onError(200,"El usuario con el DNI solicitado no fue encontrado");
         }
 
-        return response()->json([
-            'user' => new PacienteAdmisionResource($user)
-        ]);
+        return $this->onSuccess(new PacienteAdmisionResource($user),"Usuario encontrado");
 
     }
 
@@ -115,12 +116,12 @@ class AdmissionController extends Controller
 
         $os = OS::all(['id','nombre_comercial','codigo_os']); 
 
-        return response()->json([
-            "data" => [
+        return $this->onSuccess(
+            [
                 "profesionales" => ProfesionalPracticaResource::collection($profesionales),
                 "obra_social" => $os
             ]
-        ]);
+            );
 
     }
 
@@ -137,7 +138,8 @@ class AdmissionController extends Controller
 
         if($validator->fails()){
             return response()->json([
-                "mensaje" => $validator->errors()
+                'status' => 200,
+                'message' => $validator->errors()
             ]);
         }
 
@@ -160,9 +162,7 @@ class AdmissionController extends Controller
             'alta' => $request['alta'],
         ]);
 
-        return response()->json([
-            'mensaje' => "Admision de paciente cargada de manera satisfactoria",
-        ]);
+        return $this->onMessage(201,"Admision de paciente cargada de manera satisfactoria");
 
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Library\apiHelper;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -10,6 +11,9 @@ use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
 {
+
+    use apiHelper;
+
     public function register (Request $request){
 
         $campos = $request->validate([
@@ -31,15 +35,14 @@ class AuthController extends Controller
             'dni_type' => $campos['dni_type'],
             'cel' => $campos['celular'],
             'password'=> bcrypt($campos['password']),
-            'role_id' => 2,
+            'role_id' => $request['role_id'] ? $request['role_id'] : 2,
         ]);
 
-        $user->patient()->create(['o_s_id' => $campos['o_s_id']]);
+        if(!$request['role_id']){
+            $user->patient()->create(['o_s_id' => $campos['o_s_id']]);
+        }
 
-       return response()->json([
-            'user' => $user,
-            'message' => 'Usuario creado de manera correcta'
-        ], 201);
+        return $this->onMessage(201,"Usuario creado de manera correcta");
 
     }
 
@@ -54,10 +57,7 @@ class AuthController extends Controller
 
         if(!$user || !Hash::check($campos['password'], $user->password)){
 
-            return response()->json([
-                'message' => 'usuario o contraseña incorrectas'
-            ],401);
-
+            return $this->onError(401,"Usuario o contraseña incorrectas");
         }
         
         $userRole = $user->role->name;
@@ -80,19 +80,15 @@ class AuthController extends Controller
         }
         $token = $user->createToken('auth_token',[$rol])->plainTextToken;
 
-       return response()->json([
-            'user' => $user,
-            'token' => $token
-        ], 201);
+        return $this->onLogin($user,"Inicio de sesión correcto",201,$token);
 
     }
 
     public function logout(Request $request){
         
         $request->user()->tokens()->delete();
-        return response()->json([
-            'message' => 'Sesión cerrada'
-        ],201);
+
+        return $this->onMessage(201,"Sesión cerrada correctamente");
 
     }
 }

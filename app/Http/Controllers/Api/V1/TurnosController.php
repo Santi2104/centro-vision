@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Library\apiHelper;
 use App\Http\Resources\Paciente\PacienteTurnoResource;
 use App\Http\Resources\Turno\TurnoPacienteResource;
 use App\Models\Agenda;
@@ -14,13 +15,15 @@ use Illuminate\Support\Str;
 
 class TurnosController extends Controller
 {
+
+    use apiHelper;
+
     public function agregarPacienteAlTurno(Request $request){
 
         $validador = Validator::make($request->all(),[
             'agenda_id' => ['required'],
             'patient_id' => ['required'],
             'o_s_id' => ['required'],
-            //'practice_id' => ['required'],
         ]);
 
         if($validador->fails()){
@@ -36,17 +39,13 @@ class TurnosController extends Controller
             'orden' => Str::uuid(),
             'observaciones' => $request['observaciones'],
             'o_s_id' => $request['o_s_id'],
-           // 'practice_id' => $request['practice_id'],
         ]);
 
         $agenda = Agenda::find($request['agenda_id'], ['id','tomado']);
         $agenda->tomado = true;//debe haber una forma mejor de hacer esto
         $agenda->save();
 
-        return response()->json([
-            'message' => "El turno fue creado de manera correcta",
-            'turno' => new TurnoPacienteResource($turno),
-        ]);
+        return $this->onSuccess(new TurnoPacienteResource($turno),"El turno fue creado de manera correcta",201);
 
     }
 
@@ -58,19 +57,19 @@ class TurnosController extends Controller
 
         if($validador->fails()){
             return response()->json([
-                'errores' => $validador->errors()
+                'status' => 200, //Deberia cambiar el trait para poder usarlo en esta parte
+                'message' => $validador->errors()
             ]);
         }
 
         $turnos = User::where('dni',$request['dni'])->first();
 
-        if($turnos == null){
-            return response()->json([
-                'mensaje' => 'Paciente no encontrado'
-            ]);
+        if(is_null($turnos)){
+
+            return $this->onError(200,"No se encontro un usuario con el DNI especificado");
         }
 
-        return new PacienteTurnoResource($turnos);
+        return $this->onSuccess(new PacienteTurnoResource($turnos),"Usuario encontrado");
 
     }
 }
