@@ -27,7 +27,10 @@ class PacienteAdmisionResource extends JsonResource
             'nacimiento'=> $this->date,
             'genero'=> $this->gender,
             'direccion'=> $this->address,
-            'paciente' => $this->patient,
+            'celular' => $this->cel,
+            'telefono_fijo' => $this->tel_par,
+            'email' => $this->email,
+            'obra_social' => $this->patient->obraSocial->nombre_comercial,
             'turnos' => TurnoPacienteResource::collection($this->turnoPaciente)
 
         ];

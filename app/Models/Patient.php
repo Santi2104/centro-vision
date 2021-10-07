@@ -36,4 +36,14 @@ class Patient extends Model
     {
         return $this->hasMany(Turno::class);
     }
+
+    /**
+     * Get the obraSocial that owns the Patient
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function obraSocial()
+    {
+        return $this->belongsTo(OS::class,'o_s_id');
+    }
 }
