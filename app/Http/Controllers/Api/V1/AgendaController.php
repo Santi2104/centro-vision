@@ -8,6 +8,7 @@ use App\Models\Agenda;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AgendaController extends Controller
 {
@@ -17,6 +18,25 @@ class AgendaController extends Controller
     public function addAgendaToProfessional(Request $request){
 
         $allAdmisionData = [];
+
+        $validador = Validator::make($request->all(),[
+            'professional_id' => ['required'],
+            'practice_id' => ['required'],
+            'fecha' => ['required'],
+            'hora_inicio' => ['required'],
+            'hora_fin' => ['required'],
+            'intervalo' => ['required'],
+        ]);
+
+        if($validador->fails()){
+
+            return response()->json([
+                'status' => 200,
+                'message' => $validador->errors(),
+            ], 200);
+
+        }
+
         //Primero: Creo en formato Carbon la fecha y hora de inicio y las guardo
         //DNI, fecha de nacimiento, obra social,sexo,profesional,tratamiento,telefono,email
         $horaInicio = Carbon::createFromFormat('H:i', $request->hora_inicio)->toTimeString();
