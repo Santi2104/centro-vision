@@ -6,10 +6,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -37,6 +38,7 @@ class User extends Authenticatable
         'cuit',
         'email',
         'password',
+        'role_id'
     ];
 
     /**
@@ -59,22 +61,46 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the patient that owns the User
+     * Get the patient associated with the User
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function patient()
     {
-        return $this->belongsTo(Patient::class);
+        return $this->hasOne(Patient::class);
     }
 
     /**
-     * Get the professional that owns the User
+     * Get the profesional associated with the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function profesional()
+    {
+        return $this->hasOne(Professional::class);
+    }
+
+    /**
+     * Get the role that owns the User
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function professional()
+    public function role()
     {
-        return $this->belongsTo(Professional::class);
+        return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * Get all of the turnoPaciente for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function turnoPaciente()
+    {
+        return $this->hasManyThrough(Turno::class, Patient::class);
+    }
+
+    public function is_admision(){
+        return $this->role->name == "admision";
     }
 }

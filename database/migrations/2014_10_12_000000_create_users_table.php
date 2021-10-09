@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->integer('dni')->unique();
+            $table->integer('dni')->unique();//Sacar esta clave
             $table->string('dni_type')->nullable();
             $table->string('name');
             $table->string('lastname');

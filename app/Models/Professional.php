@@ -27,4 +27,34 @@ class Professional extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Get all of the queues for the Professional
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function queues()
+    {
+        return $this->hasMany(Queue::class);
+    }
+
+    /**
+     * Get all of the agendas for the Professional
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function agendas()
+    {
+        return $this->hasMany(Agenda::class);
+    }
+
+    /**
+     * The practicas that belong to the Professional
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function practicas()
+    {
+        return $this->belongsToMany(Practice::class,'practica_profesionales');
+    }
 }

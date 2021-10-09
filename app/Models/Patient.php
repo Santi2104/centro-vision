@@ -11,7 +11,7 @@ class Patient extends Model
 
     protected $fillable = [
         'user_id',
-        'ob',
+        'o_s_id',
         'plan',
         'notes',
         'operado',
@@ -25,5 +25,25 @@ class Patient extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get all of the turnos for the Patient
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function turnos()
+    {
+        return $this->hasMany(Turno::class);
+    }
+
+    /**
+     * Get the obraSocial that owns the Patient
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function obraSocial()
+    {
+        return $this->belongsTo(OS::class,'o_s_id');
     }
 }

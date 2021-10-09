@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOfficesTable extends Migration
+class CreateAgendasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateOfficesTable extends Migration
      */
     public function up()
     {
-        Schema::create('offices', function (Blueprint $table) {
+        Schema::create('agendas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('professional_id')->constrained();
-            $table->string('name')->comment('Nombre del lugar, por ej: Consultorio');
-            //$table->string('equipamiento')->nullable()->comment('Clave foranea de todo el equipamiento de la oficina');
+            $table->foreignId('practice_id')->constrained();
+            $table->date('fecha');
+            $table->time('hora');
+            $table->integer('intervalo');
+            $table->boolean('tomado')->default(0);
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ class CreateOfficesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('offices');
+        Schema::dropIfExists('agendas');
     }
 }
