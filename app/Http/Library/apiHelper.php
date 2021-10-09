@@ -49,7 +49,7 @@ trait apiHelper {
         ], $code);
     }
 
-    protected function onLogin($data, string $message = '', int $code = 201, $token){
+    protected function onLogin($data, $token, string $message = '', int $code = 201){
 
         return response()->json([
             'status' => $code,

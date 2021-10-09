@@ -80,7 +80,7 @@ class AuthController extends Controller
         }
         $token = $user->createToken('auth_token',[$rol])->plainTextToken;
 
-        return $this->onLogin($user,"Inicio de sesión correcto",201,$token);
+        return $this->onLogin($user,$token,"Inicio de sesión correcto",201);
 
     }
 
