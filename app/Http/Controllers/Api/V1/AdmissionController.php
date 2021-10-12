@@ -8,12 +8,10 @@ use App\Http\Resources\Paciente\PacienteAdmisionResource;
 use App\Http\Resources\Profesional\ProfesionalPracticaResource;
 use App\Models\Admission;
 use App\Models\OS;
-use App\Models\Practice;
 use App\Models\Professional;
 use App\Models\Cola;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -26,12 +24,18 @@ class AdmissionController extends Controller
 
     public function getUserByDni(Request $request){
 
+        if(!$this->isAdmision($request->user())){
+            
+            return $this->onError(401,"Acceso no autorizado");
+        }
+
         $validator = Validator::make($request->all(),[
             'dni' => ['required','numeric'] //Buscar la forma de validar que llegue un numero, esyo no funciona
         ]);
 
         if($validator->fails()){
             return response()->json([
+                'status' => 200,
                 'message' => $validator->errors()
             ]);
         }
@@ -44,69 +48,6 @@ class AdmissionController extends Controller
         }
 
         return $this->onSuccess(new PacienteAdmisionResource($user),"Usuario encontrado");
-
-    }
-
-    public function addUserToQueue(Request $request){ //Se debera enviar el ID o DNI
-
-        $colas = $request->cola;
-        $admisiones = $request->admision;
-        $allDataCola = [];
-        $allDataAdmision = [];
-
-        //Perfecto!!!!
-        $validator = Validator::make($request->all(), [
-            'cola.*.professional_id' => 'required',
-            'cola.*.patient_id' => 'required',
-            'cola.*.alta' => 'required',
-            'admision.*.professional_id' => 'required',
-            'admision.*.patient_id' => 'required',
-            'admision.*.importe' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                "datas" => $validator->errors()
-            ]);
-        }
-
-        try{//Creo que cada insercion debe ir en su propio try catch
-            foreach($colas as $item){
-
-                $cola = new Cola();
-                $cola->professional_id = $item['professional_id'];
-                $cola->patient_id = $item['patient_id'];
-                $cola->alta = Carbon::createFromTimeString($item['alta'])->toTimeString();
-                $cola->created_at = Carbon::now('America/Argentina/La_Rioja')->toDateTimeLocalString();
-                $cola->updated_at = Carbon::now('America/Argentina/La_Rioja')->toDateTimeLocalString();
-                $allDataCola[] = $cola->attributesToArray();
-            }
-    
-            Cola::insert($allDataCola);
-    
-            foreach($admisiones as $item){
-    
-                $admision = new Admission();
-                $admision->professional_id = $item['professional_id'];
-                $admision->patient_id = $item['patient_id'];
-                $admision->importe = $item['importe'];
-                $admision->notes = $item['notes'];
-                $admision->user_id = $item['user_id'];
-                $admision->date = Carbon::now('America/Argentina/La_Rioja')->toDateTimeLocalString();
-                $admision->o_s = 1;
-                $admision->practice_id = 1;
-                $cola->created_at = Carbon::now('America/Argentina/La_Rioja')->toDateTimeLocalString();
-                $cola->updated_at = Carbon::now('America/Argentina/La_Rioja')->toDateTimeLocalString();
-                $allDataAdmision[] = $admision->attributesToArray();
-    
-            }
-    
-            Admission::insert($allDataAdmision);
-        }catch(QueryException $e){
-            return response()->json(array('message' =>$e->getMessage()));
-        }
-        //dd($allDataCola);
-        return response()->json(["message" => "El usuario se agrego a admision de manera correcta"]);
 
     }
 
@@ -126,6 +67,11 @@ class AdmissionController extends Controller
     }
 
     public function ingresoPaciente(Request $request){
+
+        if(!$this->isAdmision($request->user())){
+            
+            return $this->onError(401,"Acceso no autorizado");
+        }
 
         $validator = Validator::make($request->all(),[
             'o_s' => ['required'],

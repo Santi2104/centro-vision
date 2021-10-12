@@ -48,11 +48,11 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\User::factory()
         ->count(1)
-        ->create(['role_id' => 1]);
+        ->create(['email' => 'admin@mail.com','role_id' => 1]);
 
         \App\Models\User::factory()
         ->count(1)
-        ->create(['role_id' => 4]);
+        ->create(['email' => 'admision@mail.com','role_id' => 4]);
 
         OS::factory()->times(1)->create([
             'codigo_os' => 'APOS',

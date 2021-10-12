@@ -17,6 +17,11 @@ class AgendaController extends Controller
 
     public function addAgendaToProfessional(Request $request){
 
+        if(!$this->isAdmision($request->user())){
+            
+            return $this->onError(401,"Acceso no autorizado");
+        }
+
         $allAdmisionData = [];
 
         $validador = Validator::make($request->all(),[

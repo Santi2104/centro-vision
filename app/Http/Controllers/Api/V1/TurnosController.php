@@ -20,6 +20,11 @@ class TurnosController extends Controller
 
     public function agregarPacienteAlTurno(Request $request){
 
+        if(!$this->isAdmision($request->user())){
+            
+            return $this->onError(401,"Acceso no autorizado");
+        }
+
         $validador = Validator::make($request->all(),[
             'agenda_id' => ['required'],
             'patient_id' => ['required'],
@@ -27,9 +32,9 @@ class TurnosController extends Controller
         ]);
 
         if($validador->fails()){
-            
             return response()->json([
-                'errores' => $validador->errors()
+                'status' => 200,
+                'message' => $validador->errors()
             ]);
         }
 
