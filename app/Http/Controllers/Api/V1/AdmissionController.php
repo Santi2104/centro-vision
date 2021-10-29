@@ -42,11 +42,11 @@ class AdmissionController extends Controller
 
         $user = User::where('dni', $request['dni'])->first();
 
-        if(is_null($user)){
+        if(is_null($user) || is_null($user->patient)){
 
             return $this->onError(200,"El usuario con el DNI solicitado no fue encontrado");
         }
-        //en este punto, verificar si el usuario selecionado es paciente
+
         return $this->onSuccess(new PacienteAdmisionResource($user),"Usuario encontrado");
 
     }
