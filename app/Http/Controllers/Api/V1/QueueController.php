@@ -32,4 +32,13 @@ class QueueController extends Controller
 
     }
 
+    public function llamarProximoPaciente(Request $request){
+
+        $cola = Cola::find($request['id_cola'],['id','llamando']);
+        $cola->llamando = true;
+        $cola->save();
+        return $cola;
+
+    }
+
 }

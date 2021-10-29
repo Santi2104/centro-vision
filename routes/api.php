@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\AgendaController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\QueueController;
 use App\Http\Controllers\Api\V1\TurnosController;
+use App\Http\Controllers\ProfesionalController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -50,3 +51,12 @@ Route::group([
 ], function(){
     Route::get('turno/paciente', [TurnosController::class, 'buscarTurnoPaciente']);
 });
+
+Route::group([
+    'prefix' => 'profesional',
+    'middleware' => 'auth:sanctum',
+], function(){
+    //Route::get('paciente', [ProfesionalController::class, 'listarPacientes']);
+    Route::get('paciente/llamado', [QueueController::class, 'llamarProximoPaciente']);
+});
+

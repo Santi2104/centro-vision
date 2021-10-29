@@ -48,7 +48,7 @@ class AuthController extends Controller
 
     public function login (Request $request){
         
-        $campos = $request->validate([
+        $campos = $request->validate([//Editar el Login para que cuando no mandes un token valido tire un error
             'email' => ['required','string'],
             'password'=> ['required','string']
         ]);
@@ -80,7 +80,7 @@ class AuthController extends Controller
         }
         $token = $user->createToken('auth_token',[$rol])->plainTextToken;
 
-        return $this->onLogin($user,$token,"Inicio de sesión correcto",201);
+        return $this->onLogin($user,$token,"Inicio de sesión correcto",200);
 
     }
 
