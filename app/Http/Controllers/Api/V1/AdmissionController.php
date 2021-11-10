@@ -52,7 +52,6 @@ class AdmissionController extends Controller
     }
 
     public function getAdmisionData(){
-        //*TODO:Devolver en la respuesta el intervalo que utilizo o la hora final
         $profesionales = Professional::all(['id','user_id']);
 
         $os = OS::all(['id','nombre_comercial','codigo_os']); 

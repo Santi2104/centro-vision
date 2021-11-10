@@ -25,7 +25,7 @@ class AgendaController extends Controller
 
         $allAdmisionData = [];
         $datosAComprobar = [];
-        //*TODO: verificar de alguna forma que la hora final siempre sea mayor a la inicial
+
         $validador = Validator::make($request->all(),[
             'professional_id' => ['required'],
             'practice_id' => ['required'],
@@ -46,8 +46,16 @@ class AgendaController extends Controller
 
         //Primero: Creo en formato Carbon la fecha y hora de inicio y las guardo
         //DNI, fecha de nacimiento, obra social,sexo,profesional,tratamiento,telefono,email
-        $horaInicio = Carbon::createFromFormat('H:i', $request->hora_inicio)->toTimeString();
-        $horaFin = Carbon::createFromFormat('H:i',$request->hora_fin)->toTimeString();
+        $horaInicio = Carbon::createFromFormat('H:i', $request->hora_inicio);
+        $horaFin = Carbon::createFromFormat('H:i',$request->hora_fin);
+
+
+        if($horaInicio->greaterThan($horaFin)){
+            return $this->onError(200,"La hora de inicio no puede ser mayor que la fecha de fin");
+        }
+
+        $horaInicio = $horaInicio->toTimeString();
+        $horaFin = $horaFin->toTimeString();
         $dia = Carbon::createFromDate($request->fecha)->toDateString();
 
         $colas = Agenda::where([

@@ -20,6 +20,7 @@ class AgendaProfesionalResource extends JsonResource
             'fecha' => $this->fecha,
             'hora' => $this->hora,
             'tomado' => $this->tomado,
+            'intervalo' => $this->intervalo,
             'practica' => new PracticaTurnoResource($this->practica)
         ];
     }
