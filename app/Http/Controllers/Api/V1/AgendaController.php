@@ -32,7 +32,7 @@ class AgendaController extends Controller
             'fecha' => ['required'],
             'hora_inicio' => ['required'],
             'hora_fin' => ['required'],
-            'intervalo' => ['required'],
+            'intervalo' => ['required', 'numeric', 'between:10,60'],
         ]);
 
         if($validador->fails()){
@@ -50,7 +50,7 @@ class AgendaController extends Controller
         $horaFin = Carbon::createFromFormat('H:i',$request->hora_fin);
 
 
-        if($horaInicio->greaterThan($horaFin)){
+        if($horaInicio->greaterThanOrEqualTo($horaFin)){
             return $this->onError(200,"La hora de inicio no puede ser mayor que la fecha de fin");
         }
 
